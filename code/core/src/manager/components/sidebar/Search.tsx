@@ -213,7 +213,7 @@ export const Search = React.memo<SearchProps>(function Search({
         headings.forEach((heading: string) => {
           list.push({
             ...searchItem(datasetValue, dataset.hash[refId]),
-            // TODO set "#" to a proper id value that can be scrolled into view when selected
+            // TODO add comment about why -> fuse breaks if id is not unique
             id: `${datasetValue.id}#${heading.replaceAll(' ', '-').toLowerCase()}`,
             name: `${datasetValue.name} / ${heading}`,
             status: mostCriticalStatusValue || groupStatus[datasetValue.id] || null,
@@ -266,9 +266,15 @@ export const Search = React.memo<SearchProps>(function Search({
   const onSelect = useCallback(
     (selectedItem: DownshiftItem) => {
       if (isSearchResult(selectedItem)) {
-        const { id, refId } = selectedItem.item;
+        const { id: rawId, refId } = selectedItem.item;
+        const [storyId, anchor] = rawId.split('#');
+
         // @ts-expect-error (non strict)
-        api?.selectStory(id, undefined, { ref: refId !== DEFAULT_REF_ID && refId });
+        api?.selectStory(storyId, undefined, {
+          ref: refId !== DEFAULT_REF_ID && refId,
+          scrollTo: anchor,
+        });
+
         // @ts-expect-error (non strict)
         inputRef.current.blur();
         showAllComponents(false);
