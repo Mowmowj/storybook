@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
 
 import { global } from '@storybook/global';
@@ -46,6 +46,7 @@ export const useNavigate = () => {
   const navigate = R.useNavigate();
 
   return useCallback((to: R.To | number, { plain, ...options } = {} as NavigateOptions) => {
+    debugger;
     if (typeof to === 'string' && to.startsWith('#')) {
       if (to === '#') {
         navigate(document.location.search);
@@ -56,6 +57,21 @@ export const useNavigate = () => {
     }
     if (typeof to === 'string') {
       const target = plain ? to : `?path=${to}`;
+      const [search, hash] = target.split('#');
+
+      if (search === document.location.search && hash) {
+        document.location.hash = `#${hash}`;
+
+        // TODO find proper way of doing this + also scroll smoothly, similar to the existing
+        //  SB behaviour
+        const iframe = document.getElementById('storybook-preview-iframe') as HTMLIFrameElement;
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.location.hash = `#${hash}`;
+        }
+
+        return undefined;
+      }
+
       return navigate(target, options);
     }
     if (typeof to === 'number') {
