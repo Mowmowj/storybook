@@ -269,8 +269,8 @@ export const Search = React.memo<SearchProps>(function Search({
         const { id: rawId, refId } = selectedItem.item;
         const [storyId, anchor] = rawId.split('#');
 
-        // @ts-expect-error (non strict)
         api?.selectStory(storyId, undefined, {
+          // @ts-expect-error (non strict)
           ref: refId !== DEFAULT_REF_ID && refId,
           scrollTo: anchor,
         });
