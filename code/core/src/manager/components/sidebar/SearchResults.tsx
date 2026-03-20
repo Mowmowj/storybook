@@ -182,7 +182,9 @@ const Result: FC<
   const pathMatches = matches.filter((match: Match) => match.key === 'path');
 
   const [icon] = item.status ? getStatus(theme, item.status) : [];
-  const heading = item.type === 'docs' && item.headings ? ` ${item.headings}` : undefined;
+  console.log(item.name, {
+    item,
+  });
 
   return (
     <ResultRow {...props} onClick={click}>
@@ -328,6 +330,7 @@ export const SearchResults: FC<{
 
         const { item } = result;
         const key = `${item.refId}::${item.id}`;
+
         return (
           <Result
             {...result}
