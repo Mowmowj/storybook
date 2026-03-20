@@ -46,7 +46,6 @@ export const useNavigate = () => {
   const navigate = R.useNavigate();
 
   return useCallback((to: R.To | number, { plain, ...options } = {} as NavigateOptions) => {
-    debugger;
     if (typeof to === 'string' && to.startsWith('#')) {
       if (to === '#') {
         navigate(document.location.search);

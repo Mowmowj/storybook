@@ -205,10 +205,7 @@ const Result: FC<
       </IconWrapper>
       <ResultRowContent className="search-result-item--label">
         <Title>
-          <Highlight match={nameMatch}>
-            {item.name}
-            {heading}
-          </Highlight>
+          <Highlight match={nameMatch}>{item.name}</Highlight>
         </Title>
         <Path>
           {item.path.map((group, index) => (

@@ -211,11 +211,14 @@ export const Search = React.memo<SearchProps>(function Search({
 
         const headings = datasetValue.headings ?? [];
         headings.forEach((heading: string) => {
+          const searchItemRef = searchItem(datasetValue, dataset.hash[refId]);
+          const namePostfix = searchItemRef.path?.[0] === heading ? '' : ` / ${heading}`;
+
           list.push({
-            ...searchItem(datasetValue, dataset.hash[refId]),
+            ...searchItemRef,
             // TODO add comment about why -> fuse breaks if id is not unique
             id: `${datasetValue.id}#${heading.replaceAll(' ', '-').toLowerCase()}`,
-            name: `${datasetValue.name} / ${heading}`,
+            name: `${datasetValue.name}${namePostfix}`,
             status: mostCriticalStatusValue || groupStatus[datasetValue.id] || null,
           });
         });
