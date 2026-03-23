@@ -211,6 +211,10 @@ export const Search = React.memo<SearchProps>(function Search({
           continue;
         }
 
+        if (!globalThis?.FEATURES?.experimentalSearchDocsHeadings) {
+          continue;
+        }
+
         const headings = datasetValue.headings ?? [];
         headings.forEach((heading: string) => {
           const searchItemRef = searchItem(datasetValue, dataset.hash[refId]);
