@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import { STORY_CHANGED } from 'storybook/internal/core-events';
+import { STORY_CHANGED } from "storybook/internal/core-events";
 
-import { dequal as deepEqual } from 'dequal';
-import type { API } from 'storybook/manager-api';
-import { useParameter } from 'storybook/manager-api';
+import { dequal as deepEqual } from "dequal";
+import type { API } from "storybook/manager-api";
+import { useParameter } from "storybook/manager-api";
 
-import { ActionLogger as ActionLoggerComponent } from '../../components/ActionLogger';
-import { CLEAR_ID, EVENT_ID, PARAM_KEY } from '../../constants';
-import type { ActionDisplay } from '../../models';
-import type { ActionsParameters } from '../../types';
+import { ActionLogger as ActionLoggerComponent } from "../../components/ActionLogger";
+import { CLEAR_ID, EVENT_ID, PARAM_KEY } from "../../constants";
+import type { ActionDisplay } from "../../models";
+import type { ActionsParameters } from "../../types";
 
 interface ActionLoggerProps {
   active: boolean;
@@ -26,7 +26,7 @@ const safeDeepEqual = (a: any, b: any): boolean => {
 
 export default function ActionLogger({ active, api }: ActionLoggerProps) {
   const [actions, setActions] = useState<ActionDisplay[]>([]);
-  const parameter = useParameter<ActionsParameters['actions']>(PARAM_KEY);
+  const parameter = useParameter<ActionsParameters["actions"]>(PARAM_KEY);
   const expandLevel = parameter?.expandLevel ?? 1;
 
   const clearActions = useCallback(() => {
@@ -36,15 +36,22 @@ export default function ActionLogger({ active, api }: ActionLoggerProps) {
 
   const addAction = useCallback((action: ActionDisplay) => {
     setActions((prevActions) => {
-      const newActions = [...prevActions];
-      const previous = newActions.length && newActions[newActions.length - 1];
+      const limit = action.options.limit ?? 50;
+      const previous = prevActions.length
+        ? prevActions[prevActions.length - 1]
+        : null;
+
       if (previous && safeDeepEqual(previous.data, action.data)) {
-        previous.count++;
+        const updated = [...prevActions];
+        updated[updated.length - 1] = {
+          ...previous,
+          count: previous.count + 1,
+        };
+        return updated.slice(-limit);
       } else {
-        action.count = 1;
-        newActions.push(action);
+        const newAction = { ...action, count: 1 };
+        return [...prevActions, newAction].slice(-limit);
       }
-      return newActions.slice(0, action.options.limit);
     });
   }, []);
 
@@ -70,7 +77,7 @@ export default function ActionLogger({ active, api }: ActionLoggerProps) {
       expandLevel,
       onClear: clearActions,
     }),
-    [actions, expandLevel, clearActions]
+    [actions, expandLevel, clearActions],
   );
 
   return active ? <ActionLoggerComponent {...props} /> : null;
