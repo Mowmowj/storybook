@@ -89,6 +89,7 @@
     "@vitest/runner": "^4.0.14",
     "empathic": "^2.0.0",
     "es-toolkit": "^1.43.0",
+    "extend-to-be-announced": "^2.0.0",
     "istanbul-lib-report": "^3.0.1",
     "micromatch": "^4.0.8",
     "pathe": "^1.1.2",

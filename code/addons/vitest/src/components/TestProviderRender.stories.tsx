@@ -9,13 +9,10 @@ import { ManagerContext, addons } from 'storybook/manager-api';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { styled } from 'storybook/theming';
 
-import { toHaveLiveRegion } from '../../../../core/src/manager/utils/toHaveLiveRegion';
 import { ADDON_ID as A11Y_ADDON_ID } from '../../../a11y/src/constants';
 import { storeOptions } from '../constants';
 import { store as mockStore } from '../manager-store.mock';
 import { TestProviderRender } from './TestProviderRender';
-
-expect.extend({ toHaveLiveRegion });
 
 const managerContext: any = {
   api: {
@@ -331,6 +328,7 @@ export const InSidebarContextMenu: Story = {
 
 /** Verifies that clicking "Start test run" announces "Test run started." */
 export const AnnouncesTestRunStart: Story = {
+  tags: ['vitest'],
   args: {
     testProviderState: 'test-provider-state:pending',
   },
@@ -357,7 +355,7 @@ export const AnnouncesTestRunStart: Story = {
 
     await step('Verify "Test run started." is announced', async () => {
       await waitFor(() => {
-        expect(document.body).toHaveLiveRegion({ text: 'Test run started.', level: 'polite' });
+        expect('Test run started.').toBeAnnounced('polite');
       });
     });
   },
@@ -365,6 +363,7 @@ export const AnnouncesTestRunStart: Story = {
 
 /** Verifies that transitioning from running to succeeded announces results. */
 export const AnnouncesTestRunFinished: Story = {
+  tags: ['vitest'],
   args: {
     testProviderState: 'test-provider-state:running',
     componentTestStatusValueToStoryIds: {
@@ -385,10 +384,9 @@ export const AnnouncesTestRunFinished: Story = {
   play: async ({ step }) => {
     await step('Verify test results are announced', async () => {
       await waitFor(() => {
-        expect(document.body).toHaveLiveRegion({
-          text: /Test run finished\. 1 component errored, 3 components passed\./,
-          level: 'assertive',
-        });
+        expect(/Test run finished\. 1 component errored, 3 components passed\./).toBeAnnounced(
+          'assertive'
+        );
       });
     });
   },
@@ -396,6 +394,7 @@ export const AnnouncesTestRunFinished: Story = {
 
 /** Verifies that transitioning to crashed state announces the crash assertively. */
 export const AnnouncesTestRunCrashed: Story = {
+  tags: ['vitest'],
   args: {
     testProviderState: 'test-provider-state:running',
     storeState: {
@@ -418,10 +417,7 @@ export const AnnouncesTestRunCrashed: Story = {
   play: async ({ step }) => {
     await step('Verify crash is announced', async () => {
       await waitFor(() => {
-        expect(document.body).toHaveLiveRegion({
-          text: 'Test run crashed.',
-          level: 'assertive',
-        });
+        expect('Test run crashed.').toBeAnnounced('assertive');
       });
     });
   },

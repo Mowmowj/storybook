@@ -2,6 +2,7 @@ import { vi, expect as vitestExpect } from 'vitest';
 
 import { setProjectAnnotations } from '@storybook/react';
 
+import 'extend-to-be-announced/vitest';
 import { userEvent as storybookEvent, expect as storybookExpect } from 'storybook/test';
 
 import preview from './preview';

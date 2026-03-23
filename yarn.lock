@@ -7740,6 +7740,7 @@ __metadata:
     "@vitest/runner": "npm:^4.0.14"
     empathic: "npm:^2.0.0"
     es-toolkit: "npm:^1.43.0"
+    extend-to-be-announced: "npm:^2.0.0"
     istanbul-lib-report: "npm:^3.0.1"
     micromatch: "npm:^4.0.8"
     pathe: "npm:^1.1.2"
@@ -11755,6 +11756,13 @@ __metadata:
   version: 0.0.2
   resolution: "argv@npm:0.0.2"
   checksum: 10c0/13b7a94bf690b8cf04dcaac0c70b631df10de8a1eeb701f31c85abe46a60db449c1e3330e92ef00ffe2a709a5b35baf815e52cc4b8cbe495829c90ceb3e3e30f
+  languageName: node
+  linkType: hard
+
+"aria-live-capture@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "aria-live-capture@npm:2.0.0"
+  checksum: 10c0/c706051c507320908d48b014bfd90ad225ad7104e3eb359c317e75f13888c7ef55a4c1b7cefdece9a28164774ad1ff4fd83cb492ea5c5fecd8172697144b12a8
   languageName: node
   linkType: hard
 
@@ -17052,6 +17060,15 @@ __metadata:
   version: 1.0.8
   resolution: "exsolve@npm:1.0.8"
   checksum: 10c0/65e44ae05bd4a4a5d87cfdbbd6b8f24389282cf9f85fa5feb17ca87ad3f354877e6af4cd99e02fc29044174891f82d1d68c77f69234410eb8f163530e6278c67
+  languageName: node
+  linkType: hard
+
+"extend-to-be-announced@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "extend-to-be-announced@npm:2.0.0"
+  dependencies:
+    aria-live-capture: "npm:^2.0.0"
+  checksum: 10c0/8ad88d8711ce69ec60384f1febae31d7e5fcc2c63d7340d217800bcd5a43e906da1861243fc572d3b7a0484227502d037b38a6d55f397d8e0aa497cb682c23aa
   languageName: node
   linkType: hard
 
