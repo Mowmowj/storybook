@@ -335,12 +335,11 @@ export const AnnouncesTestRunStart: Story = {
   render: function Render(args) {
     const [state, setState] = React.useState<TestProviderState>(args.testProviderState);
     React.useEffect(() => {
-      mockStore.send.mockImplementation(((action: { type: string }) => {
+      mockStore.send.mockImplementation((action: { type: string }) => {
         if (action.type === 'TRIGGER_RUN') {
           setState('test-provider-state:running');
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }) as any);
+      });
       return () => {
         mockStore.send.mockReset();
       };
