@@ -5,6 +5,7 @@ import { type TestProviderState } from 'storybook/internal/types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { destroyAnnouncer } from '@react-aria/live-announcer';
+import type {} from 'extend-to-be-announced/jest/register';
 import { ManagerContext, addons } from 'storybook/manager-api';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { styled } from 'storybook/theming';
